@@ -1,0 +1,163 @@
+.product-detail-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin: 20px;
+}
+
+.product-image img {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 8px;
+}
+
+.product-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.product-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.product-description {
+  margin-bottom: 1.5rem;
+  color: #555;
+}
+
+.product-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.product-quantity {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.quantity-controls {
+  margin-left: 20px;
+  display: flex;
+}
+
+.btn-quantity {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.2) 0 4px 12px;
+  color: rgba(0, 0, 0, 0.65);
+  transition: all 0.3s;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.3) 0 4px 12px;
+  }
+}
+
+.quantity-display {
+  width: 100px;
+  height: 30px;
+  font-size: 1rem;
+  color: #555;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-actions .btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.product-actions .btn.add-to-cart {
+  background-color: #1c45c1;
+  color: white;
+}
+
+.product-actions .btn.buy-now {
+  background-color: #28a745;
+  color: white;
+}
+
+.product-actions .btn:hover {
+  opacity: 0.9;
+}
+
+.related-products {
+  margin-top: 40px;
+}
+
+.related-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.related-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.related-card {
+  width: 250px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  padding: 10px;
+  transition: transform 0.3s;
+}
+
+.card-related-title {
+  font-size: 14px;
+  text-align: left;
+  height: 30px;
+  display: flex;
+  align-items: start;
+}
+
+.related-img {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+}
+
+.card-related-price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1c45c1;
+  text-align: left;
+}
+
+.re-btn-view-more {
+  background: linear-gradient(45deg, #1c45c1, #007bff);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

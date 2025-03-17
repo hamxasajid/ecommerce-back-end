@@ -1,0 +1,7 @@
+body{
+    font-family: 'Poppins', sans-serif;
+}
+
+.nav-link{
+    font-size: clamp(0.6rem, 1.5vw, 1rem);
+}
