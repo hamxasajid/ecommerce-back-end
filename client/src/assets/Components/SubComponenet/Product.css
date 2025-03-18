@@ -34,6 +34,18 @@
   gap: 20px;
 }
 
+.nav-link-nav {
+  color: #333;
+  text-decoration: none;
+  font-size: clamp(9px, 2vw, 14px);
+}
+
+.nav-link-nav.active {
+  color: #007bff;
+  text-decoration: none !important;
+  font-weight: bold;
+}
+
 .card {
   border: 1px solid #ccc;
   border-radius: 8px;

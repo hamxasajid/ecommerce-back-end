@@ -10,13 +10,13 @@ const Products = () => {
     <>
       <div className="container parentContainer-nav">
         <div className="head">
-          <div className="productNav p-2">
+          <div className="productNav">
             <nav className="navbar bg-body-tertiary rounded-3">
               <div className="container d-flex justify-content-center">
-                <ul className="navbar-nav flex-row gap-4">
+                <ul className="navbar-nav flex-row gap-3">
                   <li className="nav-item">
                     <Link
-                      className={`nav-link ${isActive("/products")}`}
+                      className={`nav-link-nav ${isActive("/products")}`}
                       to="/products"
                     >
                       All Products
@@ -24,7 +24,7 @@ const Products = () => {
                   </li>
                   <li className="nav-item">
                     <Link
-                      className={`nav-link ${isActive(
+                      className={`nav-link-nav ${isActive(
                         "/products/men-fashion"
                       )}`}
                       to="/products/men-fashion"
@@ -34,7 +34,7 @@ const Products = () => {
                   </li>
                   <li className="nav-item">
                     <Link
-                      className={`nav-link ${isActive(
+                      className={`nav-link-nav ${isActive(
                         "/products/women-fashion"
                       )}`}
                       to="/products/women-fashion"
@@ -44,7 +44,9 @@ const Products = () => {
                   </li>
                   <li className="nav-item">
                     <Link
-                      className={`nav-link ${isActive("/products/jewelry")}`}
+                      className={`nav-link-nav ${isActive(
+                        "/products/jewelry"
+                      )}`}
                       to="/products/jewelry"
                     >
                       Jewelry

@@ -11,6 +11,7 @@ import Jewelry from "./assets/Components/SubComponenet/Jewelry";
 import Footer from "./assets/Components/Footer";
 import Details from "./assets/Components/SubComponenet/Details";
 import Checkout from "./assets/Components/SubComponenet/Checkout";
+import SearchResults from "./assets/Components/SearchResults";
 const App = () => {
   return (
     <>
@@ -28,6 +29,7 @@ const App = () => {
             <Route path="/productdetails/:productId" element={<Details />} />
             <Route path="/cart" element={<Checkout />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/search_result" element={<SearchResults />} />
           </Route>
         </Routes>
         <Footer />

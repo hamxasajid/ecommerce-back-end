@@ -16,8 +16,15 @@ const Nav = () => {
   const [offCanvasOpen, setOffCanvasOpen] = useState(false);
   const location = useLocation();
 
-  const isActive = (path) =>
-    location.pathname === path ? "text-primary fw-bold" : "text-dark";
+  // Active function checks if the current path starts with the given path
+  const isActive = (path) => {
+    if (path === "/products") {
+      return location.pathname.startsWith("/products")
+        ? "text-primary fw-bold"
+        : "text-dark";
+    }
+    return location.pathname === path ? "text-primary fw-bold" : "text-dark";
+  };
 
   return (
     <>
