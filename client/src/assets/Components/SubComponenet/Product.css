@@ -1,10 +1,29 @@
 .parentContainer {
   display: flex;
   justify-content: center;
+  align-items: start;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.parentContainer-nav {
+  display: flex;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   flex-direction: column;
-  text-align: center;
+}
+
+.parentContainer h1 {
+  font-size: clamp(24px, 5vw, 44px);
+}
+
+@media (max-width: 786px) {
+  .parentContainer {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
 }
 
 .productContainer {
@@ -60,4 +79,8 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.me-1 {
+  margin-top: -2px;
 }

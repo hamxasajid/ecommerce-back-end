@@ -118,7 +118,7 @@ const Details = () => {
                       ${item.price}
                     </p>
                     <h3 className="card-related-title px-3">
-                      {item.title.split(" ").slice(0, 5).join(" ")}
+                      {item.title.split(" ").slice(0, 4).join(" ")}
                     </h3>
 
                     {/* Rating Section */}

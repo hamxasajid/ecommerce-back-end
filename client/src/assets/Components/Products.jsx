@@ -1,33 +1,53 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import "./SubComponenet/Product.css";
 
 const Products = () => {
+  const location = useLocation(); // Get current route
+
+  const isActive = (path) => (location.pathname === path ? "active" : "");
+
   return (
     <>
-      <div className="parentContainer">
+      <div className="container parentContainer-nav">
         <div className="head">
           <div className="productNav p-2">
             <nav className="navbar bg-body-tertiary rounded-3">
               <div className="container d-flex justify-content-center">
                 <ul className="navbar-nav flex-row gap-4">
                   <li className="nav-item">
-                    <Link className="nav-link" to="/products">
+                    <Link
+                      className={`nav-link ${isActive("/products")}`}
+                      to="/products"
+                    >
                       All Products
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to="/products/men-fashion">
+                    <Link
+                      className={`nav-link ${isActive(
+                        "/products/men-fashion"
+                      )}`}
+                      to="/products/men-fashion"
+                    >
                       Men Fashion
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to="/products/women-fashion">
+                    <Link
+                      className={`nav-link ${isActive(
+                        "/products/women-fashion"
+                      )}`}
+                      to="/products/women-fashion"
+                    >
                       Women Fashion
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link className="nav-link" to="/products/jewelry">
-                      jewelery
+                    <Link
+                      className={`nav-link ${isActive("/products/jewelry")}`}
+                      to="/products/jewelry"
+                    >
+                      Jewelry
                     </Link>
                   </li>
                 </ul>

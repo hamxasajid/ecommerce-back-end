@@ -55,7 +55,7 @@ const AllProducts = () => {
 
   return (
     <>
-      <div className="parentContainer">
+      <div className="container parentContainer-nav">
         <div className="head">
           <h1 className="display-5 fw-bold text-Dark">
             All <span className="text-primary">Products</span>

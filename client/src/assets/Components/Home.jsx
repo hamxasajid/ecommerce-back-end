@@ -36,15 +36,17 @@ const Home = () => {
       {/* Hero Section */}
       <div className="bg-dark text-secondary px-4 py-5 text-center">
         <div className="py-5">
-          <h1 className="display-5 fw-bold text-white">
+          <h3 className="fs-1 fs-md-6 fw-bold text-white">
             Your Ultimate Shopping Destination
-          </h1>
+            <span className="text-primary fs-1">.</span>
+          </h3>
+          <p className="fs-5 fs-md-4 fs-lg-3 mb-4 ">
+            Discover the latest trends in <b>Men Fashion, Women Fashion,</b> and{" "}
+            <b>Jewelry.</b>
+            Shop with confidence and experience quality like never before.
+            Elevate your style today!
+          </p>
           <div className="col-lg-6 mx-auto">
-            <p className="fs-5 mb-4">
-              Discover the latest trends in <b>Men Fashion, Women Fashion,</b>{" "}
-              and <b>Jewelry.</b> Shop with confidence and experience quality
-              like never before. Elevate your style today!
-            </p>
             <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
               <Link
                 to="/products"
