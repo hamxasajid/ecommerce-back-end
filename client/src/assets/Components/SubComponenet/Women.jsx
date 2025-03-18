@@ -17,7 +17,7 @@ const Women = () => {
   });
   return (
     <>
-      <div className="parentContainer">
+      <div className="container parentContainer">
         <div className="head">
           <h1 className="display-5 fw-bold text-Dark">
             Women <span className="text-primary">Fashion</span>
