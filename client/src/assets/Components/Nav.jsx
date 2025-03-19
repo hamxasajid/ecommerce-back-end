@@ -10,6 +10,7 @@ import {
   FaInfo,
   FaBoxOpen,
   FaEnvelope,
+  FaSearch, // Import search icon
 } from "react-icons/fa";
 
 const Nav = () => {
@@ -19,39 +20,35 @@ const Nav = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [offCanvasOpen, setOffCanvasOpen] = useState(false);
 
-  // Fetch product suggestions from API
   useEffect(() => {
-    const fetchSuggestions = async () => {
-      if (searchTerm.length > 0) {
-        try {
-          const response = await fetch("http://localhost:5000/products");
-          const data = await response.json();
+    if (!searchTerm.trim()) {
+      setSuggestions([]);
+      return;
+    }
 
-          if (!Array.isArray(data)) {
-            console.error("Invalid API response:", data);
-            return;
-          }
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/products");
+        if (!response.ok) throw new Error("Failed to fetch products");
 
-          // Filter products by name and limit to 6 suggestions
-          const filtered = data
-            .filter((item) =>
-              item?.title?.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-            .slice(0, 6);
+        const data = await response.json();
 
-          setSuggestions(filtered);
-        } catch (error) {
-          console.error("Error fetching suggestions:", error);
-        }
-      } else {
-        setSuggestions([]);
+        // Only show products that start with the search term
+        const filtered = data
+          .filter((item) =>
+            item.title.toLowerCase().startsWith(searchTerm.toLowerCase())
+          )
+          .map((item) => item.title);
+
+        setSuggestions(filtered);
+      } catch (error) {
+        console.error("Error fetching products:", error);
       }
     };
 
-    fetchSuggestions();
+    fetchProducts();
   }, [searchTerm]);
 
-  // Handle search submission
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchTerm.trim()) {
@@ -61,9 +58,8 @@ const Nav = () => {
     }
   };
 
-  // Handle clicking a suggestion
   const handleSuggestionClick = (title) => {
-    navigate(`/search_result?title=${title}`);
+    navigate(`/search_result?query=${title}`);
     setSearchTerm("");
     setSuggestions([]);
   };
@@ -76,11 +72,11 @@ const Nav = () => {
     }
     return location.pathname === path ? "text-primary fw-bold" : "text-dark";
   };
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
-          {/* Logo */}
           <Link className="navbar-brand text-dark text-decoration-none" to="/">
             Style<span className="text-primary fw-bold">Fusion</span>
           </Link>
@@ -90,7 +86,7 @@ const Nav = () => {
             className="d-none d-lg-flex mx-auto w-50"
             onSubmit={handleSearch}
           >
-            <div className="position-relative w-100">
+            <div className="position-relative w-100 d-flex">
               <input
                 type="text"
                 className="form-control"
@@ -98,16 +94,22 @@ const Nav = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
+              <button type="submit" className="btn btn-primary ms-2">
+                <FaSearch />
+              </button>
 
               {suggestions.length > 0 && (
-                <ul className="list-group position-absolute w-100 shadow-sm z-3">
-                  {suggestions.map((item) => (
+                <ul
+                  className="list-group position-absolute w-100 shadow-sm z-3"
+                  style={{ marginTop: "40px" }}
+                >
+                  {suggestions.map((title, index) => (
                     <li
-                      key={item.id}
+                      key={index}
                       className="list-group-item list-group-item-action"
-                      onClick={() => handleSuggestionClick(item.title)}
+                      onClick={() => handleSuggestionClick(title)}
                     >
-                      {item.title}
+                      {title}
                     </li>
                   ))}
                 </ul>
@@ -115,34 +117,19 @@ const Nav = () => {
             </div>
           </form>
 
-          {/* Icons */}
           <div className="d-flex align-items-center">
             <Link
               to="/wishlist"
-              className={`nav-link me-3 text-decoration-none ${isActive(
-                "/wishlist"
-              )}`}
+              className={`nav-link me-3 ${isActive("/wishlist")}`}
             >
               <FaHeart size={20} />
             </Link>
-            <Link
-              to="/cart"
-              className={`nav-link me-3 text-decoration-none ${isActive(
-                "/cart"
-              )}`}
-            >
+            <Link to="/cart" className={`nav-link me-3 ${isActive("/cart")}`}>
               <FaShoppingCart size={20} />
             </Link>
-            <Link
-              to="/login"
-              className={`nav-link me-3 text-decoration-none ${isActive(
-                "/login"
-              )}`}
-            >
+            <Link to="/login" className={`nav-link me-3 ${isActive("/login")}`}>
               <FaUser size={20} />
             </Link>
-
-            {/* Hamburger Icon */}
             <button
               className="navbar-toggler"
               type="button"
@@ -154,9 +141,9 @@ const Nav = () => {
         </div>
       </nav>
 
-      {/* Search Bar - Mobile */}
+      {/* Mobile Search */}
       <div className="d-lg-none px-3 py-2">
-        <form className="position-relative" onSubmit={handleSearch}>
+        <form className="position-relative d-flex" onSubmit={handleSearch}>
           <input
             type="text"
             className="form-control"
@@ -165,15 +152,22 @@ const Nav = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             autoComplete="off"
           />
+          <button type="submit" className="btn btn-primary ms-2">
+            <FaSearch />
+          </button>
+
           {suggestions.length > 0 && (
-            <ul className="list-group position-absolute w-100 shadow-sm z-100">
-              {suggestions.map((item) => (
+            <ul
+              className="list-group position-absolute w-100 shadow-sm z-3"
+              style={{ marginTop: "40px" }}
+            >
+              {suggestions.map((title, index) => (
                 <li
-                  key={item.id}
+                  key={index}
                   className="list-group-item list-group-item-action"
-                  onClick={() => handleSuggestionClick(item.title)}
+                  onClick={() => handleSuggestionClick(title)}
                 >
-                  {item.title}
+                  {title}
                 </li>
               ))}
             </ul>
@@ -181,7 +175,6 @@ const Nav = () => {
         </form>
       </div>
 
-      {/* Navigation Links */}
       <div className="bg-light py-2 d-none d-lg-flex justify-content-center border-bottom">
         <Link className={`mx-3 text-decoration-none ${isActive("/")}`} to="/">
           <FaHome className="me-1" /> Home
@@ -207,40 +200,38 @@ const Nav = () => {
       </div>
 
       {/* Off-Canvas Navbar */}
-      <div className={`offcanvas offcanvas-end ${offCanvasOpen ? "show" : ""}`}>
-        <div className="offcanvas-header">
-          <button className="btn" onClick={() => setOffCanvasOpen(false)}>
-            <FaTimes size={24} />
-          </button>
+      {offCanvasOpen && (
+        <div className="offcanvas offcanvas-end show">
+          <div className="offcanvas-header">
+            <button className="btn" onClick={() => setOffCanvasOpen(false)}>
+              <FaTimes size={24} />
+            </button>
+          </div>
+          <div className="offcanvas-body">
+            <Link
+              className={`d-block mb-3 ${isActive("/login")}`}
+              to="/login"
+              onClick={() => setOffCanvasOpen(false)}
+            >
+              <FaUser className="me-2" /> Login
+            </Link>
+            <Link
+              className={`d-block mb-3 ${isActive("/")}`}
+              to="/"
+              onClick={() => setOffCanvasOpen(false)}
+            >
+              <FaHome className="me-2" /> Home
+            </Link>
+            <Link
+              className={`d-block mb-3 ${isActive("/products")}`}
+              to="/products"
+              onClick={() => setOffCanvasOpen(false)}
+            >
+              <FaBoxOpen className="me-2" /> Products
+            </Link>
+          </div>
         </div>
-        <div className="offcanvas-body">
-          <Link
-            className={`d-block mb-3 text-decoration-none ${isActive(
-              "/login"
-            )}`}
-            to="/login"
-            onClick={() => setOffCanvasOpen(false)}
-          >
-            <FaUser className="me-2" /> Login
-          </Link>
-          <Link
-            className={`d-block mb-3 text-decoration-none ${isActive("/")}`}
-            to="/"
-            onClick={() => setOffCanvasOpen(false)}
-          >
-            <FaHome className="me-2" /> Home
-          </Link>
-          <Link
-            className={`d-block mb-3 text-decoration-none ${isActive(
-              "/products"
-            )}`}
-            to="/products"
-            onClick={() => setOffCanvasOpen(false)}
-          >
-            <FaBoxOpen className="me-2" /> Products
-          </Link>
-        </div>
-      </div>
+      )}
       <Outlet />
     </>
   );

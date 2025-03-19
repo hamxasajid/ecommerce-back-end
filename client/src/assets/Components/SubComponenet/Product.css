@@ -96,3 +96,11 @@
 .me-1 {
   margin-top: -2px;
 }
+
+.loading-container {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #1c45c1;
+  margin: 20px 0;
+}
