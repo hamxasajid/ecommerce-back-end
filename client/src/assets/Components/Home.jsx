@@ -103,7 +103,7 @@ const Home = () => {
                   ))}
                 </span>
               </div>
-              <Link to={`/productdetails/${item._id}`}>
+              <Link to={`/productdetails/${item.id}`}>
                 <button className="btn-view-more mt-3">View Details</button>
               </Link>
             </div>
@@ -161,7 +161,7 @@ const Home = () => {
                   ))}
                 </span>
               </div>
-              <Link to={`/productdetails/${item._id}`}>
+              <Link to={`/productdetails/${item.id}`}>
                 <button className="btn-view-more mt-3">View Details</button>
               </Link>
             </div>

@@ -11,22 +11,23 @@ const Details = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/products/${productId}`)
+      .get(`http://localhost:5000/products`)
       .then((response) => {
-        setProduct(response.data);
+        // Find product using 'id' instead of '_id'
+        const foundProduct = response.data.find(
+          (item) => item.id === parseInt(productId) // Ensure ID comparison works
+        );
+        setProduct(foundProduct);
 
-        // Fetch related products based on the category
-        axios
-          .get(`http://localhost:5000/products`)
-          .then((res) => {
-            const filteredProducts = res.data.filter(
-              (item) =>
-                item.category === response.data.category &&
-                item.id !== response.data.id
-            );
-            setRelatedProducts(filteredProducts);
-          })
-          .catch(() => console.error("Error fetching related products"));
+        if (foundProduct) {
+          // Filter related products based on category
+          const filteredProducts = response.data.filter(
+            (item) =>
+              item.category === foundProduct.category &&
+              item.id !== foundProduct.id
+          );
+          setRelatedProducts(filteredProducts);
+        }
       })
       .catch(() => console.error("Error fetching product data"));
   }, [productId]);
@@ -40,7 +41,7 @@ const Details = () => {
       localStorage.setItem("cart", JSON.stringify(cart));
       console.log("Added to cart");
     } else {
-      console.log("Product already in cart");
+      alert("Product already in cart");
     }
   };
 
@@ -138,8 +139,10 @@ const Details = () => {
                       </span>
                     </div>
 
-                    <Link to={`/productdetails/${item._id}`}>
-                      <button className="re-btn-view-more">View Details</button>
+                    <Link to={`/productdetails/${item.id}`}>
+                      <button className="btn-view-more mt-3">
+                        View Details
+                      </button>
                     </Link>
                   </div>
                 ))

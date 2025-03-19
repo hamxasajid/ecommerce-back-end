@@ -36,9 +36,9 @@ const Products = () => {
       <div className="container parentContainer-nav">
         <div className="head">
           <div className="productNav">
-            <nav className="navbar bg-body-tertiary rounded-3">
+            <nav className="navbar bg-body-tertiary rounded-3 navContainer">
               <div className="container d-flex justify-content-center">
-                <ul className="navbar-nav flex-row gap-3">
+                <ul className="navbar-nav flex-row gap-3 flex-nowrap">
                   <li className="nav-item">
                     <Link
                       className={`nav-link-nav ${isActive("/products")}`}

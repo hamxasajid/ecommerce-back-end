@@ -29,15 +29,12 @@ app.post("/addproducts", async (req, res) => {
 });
 
 app.get("/products/:id", async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
-    }
-    res.json(product);
-  } catch (error) {
-    res.status(500).json({ message: "Server error" });
+  const { id } = req.params;
+  const product = await Product.findOne({ id: parseInt(id) }); // Find by 'id' field
+  if (!product) {
+    return res.status(404).json({ message: "Product not found" });
   }
+  res.json(product);
 });
 
 const PORT = process.env.PORT || 5000;

@@ -38,6 +38,7 @@ const Nav = () => {
           .filter((item) =>
             item.title.toLowerCase().startsWith(searchTerm.toLowerCase())
           )
+          .slice(0, 5)
           .map((item) => item.title);
 
         setSuggestions(filtered);
@@ -120,14 +121,20 @@ const Nav = () => {
           <div className="d-flex align-items-center">
             <Link
               to="/wishlist"
-              className={`nav-link me-3 ${isActive("/wishlist")}`}
+              className={`nav-link-nav me-3 ${isActive("/wishlist")}`}
             >
               <FaHeart size={20} />
             </Link>
-            <Link to="/cart" className={`nav-link me-3 ${isActive("/cart")}`}>
+            <Link
+              to="/cart"
+              className={`nav-link-nav me-3 ${isActive("/cart")}`}
+            >
               <FaShoppingCart size={20} />
             </Link>
-            <Link to="/login" className={`nav-link me-3 ${isActive("/login")}`}>
+            <Link
+              to="/login"
+              className={`nav-link-nav me-3 ${isActive("/login")}`}
+            >
               <FaUser size={20} />
             </Link>
             <button
@@ -177,25 +184,25 @@ const Nav = () => {
 
       <div className="bg-light py-2 d-none d-lg-flex justify-content-center border-bottom">
         <Link className={`mx-3 text-decoration-none ${isActive("/")}`} to="/">
-          <FaHome className="me-1" /> Home
+          <FaHome className="nav-link-nav me-1" /> Home
         </Link>
         <Link
           className={`mx-3 text-decoration-none ${isActive("/about")}`}
           to="/about"
         >
-          <FaInfo className="me-1" /> About
+          <FaInfo className="nav-link-nav me-1" /> About
         </Link>
         <Link
           className={`mx-3 text-decoration-none ${isActive("/products")}`}
           to="/products"
         >
-          <FaBoxOpen className="me-1" /> Products
+          <FaBoxOpen className="nav-link-nav me-1" /> Products
         </Link>
         <Link
           className={`mx-3 text-decoration-none ${isActive("/contact")}`}
           to="/contact"
         >
-          <FaEnvelope className="me-1" /> Contact
+          <FaEnvelope className="nav-link-nav me-1" /> Contact
         </Link>
       </div>
 
@@ -209,21 +216,25 @@ const Nav = () => {
           </div>
           <div className="offcanvas-body">
             <Link
-              className={`d-block mb-3 ${isActive("/login")}`}
+              className={`d-block mb-3 nav-link-nav-products ${isActive(
+                "/login"
+              )}`}
               to="/login"
               onClick={() => setOffCanvasOpen(false)}
             >
-              <FaUser className="me-2" /> Login
+              <FaUser className=" me-2" /> Login
             </Link>
             <Link
-              className={`d-block mb-3 ${isActive("/")}`}
+              className={`d-block mb-3 nav-link-nav-products ${isActive("/")}`}
               to="/"
               onClick={() => setOffCanvasOpen(false)}
             >
               <FaHome className="me-2" /> Home
             </Link>
             <Link
-              className={`d-block mb-3 ${isActive("/products")}`}
+              className={`d-block mb-3 nav-link-nav-products ${isActive(
+                "/products"
+              )}`}
               to="/products"
               onClick={() => setOffCanvasOpen(false)}
             >

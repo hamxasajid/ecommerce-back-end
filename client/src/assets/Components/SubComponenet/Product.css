@@ -37,7 +37,13 @@
 .nav-link-nav {
   color: #333;
   text-decoration: none;
-  font-size: clamp(9px, 2vw, 14px);
+  font-size: clamp(9px, 3vw, 14px);
+}
+
+.nav-link-nav-products {
+  color: #333;
+  text-decoration: none;
+  font-size: 18px;
 }
 
 .nav-link-nav.active {
@@ -103,4 +109,44 @@
   font-weight: bold;
   color: #1c45c1;
   margin: 20px 0;
+}
+
+/* Ensures the nav container takes up all available space */
+.productNav .navbar-nav {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  margin: auto;
+}
+
+.productNav .navbar-nav .nav-item {
+  flex-shrink: 0; /* Prevent shrinking of items */
+}
+
+.productNav .navbar-nav::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+  display: none;
+}
+
+.productNav .navbar-nav::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+/* Add custom styles for small screens */
+@media (max-width: 576px) {
+  .productNav .navbar-nav {
+    width: 300px;
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    margin: auto;
+  }
+
+  .productNav .navbar-nav .nav-item {
+    flex-shrink: 0;
+  }
 }
