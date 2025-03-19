@@ -1,39 +1,41 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import "./Product.css";
-import { Link } from "react-router-dom";
 
 const CategoryProducts = () => {
   const { category } = useParams(); // Get category from URL
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(
-    parseInt(localStorage.getItem("categoryCurrentPage")) || 1
-  );
+  const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 8;
 
+  // Helper function to format category names consistently
+  const formatCategory = (str) =>
+    str.toLowerCase().replace(/\s+/g, "-").replace(/['"]/g, "");
+
+  // Fetch products from API
   useEffect(() => {
     axios
       .get("http://localhost:5000/products")
       .then((response) => {
+        console.log("Fetched products:", response.data); // Debugging
         setData(response.data);
         setLoading(false);
       })
-      .catch(() => {
-        console.log("API Not Found");
+      .catch((error) => {
+        console.error("API Not Found:", error);
         setLoading(false);
       });
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("categoryCurrentPage", currentPage);
-  }, [currentPage]);
-
   // Filter products by category
   const filteredData = data.filter(
-    (item) => item.category.toLowerCase().replace(/\s+/g, "-") === category
+    (item) => formatCategory(item.category) === formatCategory(category)
   );
+
+  console.log("Category from URL:", category);
+  console.log("Filtered Products:", filteredData);
 
   // Pagination logic
   const totalPages = Math.ceil(filteredData.length / productsPerPage);
@@ -46,11 +48,10 @@ const CategoryProducts = () => {
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
-    localStorage.setItem("categoryCurrentPage", pageNumber);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Capitalize category name for the heading
+  // Capitalize category name for heading
   const formattedCategory =
     category.charAt(0).toUpperCase() + category.slice(1).replace("-", " ");
 
@@ -58,7 +59,7 @@ const CategoryProducts = () => {
     <>
       <div className="container parentContainer">
         <div className="head">
-          <h1 className="display-5 fw-bold text-Dark">
+          <h1 className="display-5 fw-bold text-dark">
             {formattedCategory} <span className="text-primary">Products</span>
           </h1>
         </div>
@@ -67,6 +68,8 @@ const CategoryProducts = () => {
       <div className="container productContainer">
         {loading ? (
           <p>Loading...</p>
+        ) : filteredData.length === 0 ? (
+          <p className="no-products">No products found in this category.</p>
         ) : (
           currentProducts.map((item) => (
             <div className="card" key={item.id}>
@@ -77,6 +80,7 @@ const CategoryProducts = () => {
               <div className="Card-price px-3">
                 <p className="card-text">${item.price}</p>
               </div>
+
               <div className="Card-title px-3">
                 <h3 className="card-title">
                   {item.title.split(" ").slice(0, 5).join(" ")}
@@ -99,6 +103,7 @@ const CategoryProducts = () => {
                   ))}
                 </span>
               </div>
+
               <Link to={`/productdetails/${item.id}`}>
                 <button className="btn-view-more mt-3">View Details</button>
               </Link>

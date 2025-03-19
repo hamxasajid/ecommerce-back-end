@@ -170,7 +170,7 @@ const Home = () => {
 
         {/* Button to View All Electronics */}
         <div className="text-center m-4">
-          <Link to="/products" className="btn btn-primary btn-lg">
+          <Link to="/products/electronics" className="btn btn-primary btn-lg">
             View All Electronics
           </Link>
         </div>
