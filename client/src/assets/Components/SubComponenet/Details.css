@@ -12,6 +12,13 @@ h1 {
   margin: 20px;
 }
 
+.product-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
 .product-image img {
   width: 100%;
   max-width: 300px;

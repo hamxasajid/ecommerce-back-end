@@ -2,6 +2,9 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./Details.css";
+import { FaShoppingCart } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Details = () => {
   const { productId } = useParams();
@@ -32,16 +35,24 @@ const Details = () => {
       .catch(() => console.error("Error fetching product data"));
   }, [productId]);
 
-  const addToCart = () => {
+  const addToCart = (item) => {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const exists = cart.find((item) => item.id === product.id);
+    const exists = cart.find((cartItem) => cartItem.id === item.id);
 
     if (!exists) {
-      cart.push({ ...product, quantity });
+      cart.push({ ...item, quantity: quantity || 1 }); // Use selected quantity or default to 1
       localStorage.setItem("cart", JSON.stringify(cart));
-      console.log("Added to cart");
+      toast.success("Product added successfully!", {
+        position: "top-right",
+        autoClose: 2000, // Closes after 2 seconds
+      });
     } else {
-      alert("Product already in cart");
+      cart[cart.indexOf(exists)].quantity += quantity || 1; // Increment by selected quantity
+      localStorage.setItem("cart", JSON.stringify(cart));
+      toast.success("Quantity updated successfully!", {
+        position: "top-right",
+        autoClose: 2000,
+      });
     }
   };
 
@@ -60,6 +71,7 @@ const Details = () => {
               <img src={product.image} alt={product.title} />
             </div>
             <div className="product-info">
+              <p className="text-primary text-uppercase">{product.category}</p>
               <h2 className="product-title">{product.title}</h2>
               <p className="product-description">{product.description}</p>
               <p className="product-price">
@@ -95,8 +107,12 @@ const Details = () => {
 
               <div className="product-actions">
                 <Link to="/cart" className="btn go-to-checkout">
-                  <button className="btn add-to-cart" onClick={addToCart}>
-                    Go to Cart
+                  <button
+                    className="btn add-to-cart"
+                    onClick={() => addToCart(product)}
+                  >
+                    Go To Cart {""}
+                    <FaShoppingCart size={20} />
                   </button>
                 </Link>
               </div>
@@ -139,11 +155,20 @@ const Details = () => {
                       </span>
                     </div>
 
-                    <Link to={`/productdetails/${item.id}`}>
-                      <button className="btn-view-more mt-3">
-                        View Details
+                    <div className="btns d-flex justify-content-between align-items-center px-3">
+                      <Link to={`/productdetails/${item.id}`}>
+                        <button className="btn-view-more mt-3">
+                          View Details
+                        </button>
+                      </Link>
+
+                      <button
+                        className="btn-cart mt-3 border border-primary p-2 rounded text-primary"
+                        onClick={() => addToCart(item)}
+                      >
+                        <FaShoppingCart size={20} />
                       </button>
-                    </Link>
+                    </div>
                   </div>
                 ))
               ) : (
@@ -155,6 +180,7 @@ const Details = () => {
       ) : (
         <p>Loading product details...</p>
       )}
+      <ToastContainer />
     </div>
   );
 };

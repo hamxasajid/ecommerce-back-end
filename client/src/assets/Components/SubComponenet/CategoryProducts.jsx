@@ -2,6 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import "./Product.css";
+import { FaShoppingCart } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CategoryProducts = () => {
   const { category } = useParams(); // Get category from URL
@@ -55,6 +58,25 @@ const CategoryProducts = () => {
   const formattedCategory =
     category.charAt(0).toUpperCase() + category.slice(1).replace("-", " ");
 
+  const addToCart = (item) => {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const exists = cart.find((cartItem) => cartItem.id === item.id);
+
+    if (!exists) {
+      cart.push({ ...item, quantity: 1 }); // Default quantity
+      localStorage.setItem("cart", JSON.stringify(cart));
+      toast.success("Product added successfully!", {
+        position: "top-right",
+        autoClose: 2000, // Closes after 2 seconds
+      });
+    } else {
+      toast.error("Product already in cart!", {
+        position: "top-right",
+        autoClose: 2000,
+      });
+    }
+  };
+
   return (
     <>
       <div className="container parentContainer">
@@ -104,9 +126,18 @@ const CategoryProducts = () => {
                 </span>
               </div>
 
-              <Link to={`/productdetails/${item.id}`}>
-                <button className="btn-view-more mt-3">View Details</button>
-              </Link>
+              <div className="btns d-flex justify-content-between align-items-center px-3">
+                <Link to={`/productdetails/${item.id}`}>
+                  <button className="btn-view-more mt-3">View Details</button>
+                </Link>
+
+                <button
+                  className="btn-cart mt-3 border border-primary p-2 rounded text-primary"
+                  onClick={() => addToCart(item)}
+                >
+                  <FaShoppingCart size={20} />
+                </button>
+              </div>
             </div>
           ))
         )}
@@ -162,6 +193,7 @@ const CategoryProducts = () => {
           </nav>
         </div>
       )}
+      <ToastContainer />
     </>
   );
 };

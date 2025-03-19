@@ -31,7 +31,7 @@ const Checkout = () => {
       </div>
       {data.length > 0 ? (
         <div>
-          <h3>Shopping Cart</h3>
+          <h3 className="text-start">Your Shopping Cart</h3>
           <div className="table-container">
             <table>
               <thead>

@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./SubComponenet/Product.css";
+import { FaShoppingCart } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -30,6 +33,25 @@ const Home = () => {
       setRandomElectronics(shuffled.slice(0, 8));
     }
   }, [data]); // Runs only when `data` changes
+
+  const addToCart = (item) => {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const exists = cart.find((cartItem) => cartItem.id === item.id);
+
+    if (!exists) {
+      cart.push({ ...item, quantity: 1 }); // Default quantity
+      localStorage.setItem("cart", JSON.stringify(cart));
+      toast.success("Product added successfully!", {
+        position: "top-right",
+        autoClose: 2000, // Closes after 2 seconds
+      });
+    } else {
+      toast.error("Product already in cart!", {
+        position: "top-right",
+        autoClose: 2000,
+      });
+    }
+  };
 
   return (
     <>
@@ -103,9 +125,18 @@ const Home = () => {
                   ))}
                 </span>
               </div>
-              <Link to={`/productdetails/${item.id}`}>
-                <button className="btn-view-more mt-3">View Details</button>
-              </Link>
+              <div className="btns d-flex justify-content-between align-items-center px-3">
+                <Link to={`/productdetails/${item.id}`}>
+                  <button className="btn-view-more mt-3">View Details</button>
+                </Link>
+
+                <button
+                  className="btn-cart mt-3 border border-primary p-2 rounded text-primary"
+                  onClick={() => addToCart(item)}
+                >
+                  <FaShoppingCart size={20} />
+                </button>
+              </div>
             </div>
           ))}
         </div>
@@ -161,9 +192,18 @@ const Home = () => {
                   ))}
                 </span>
               </div>
-              <Link to={`/productdetails/${item.id}`}>
-                <button className="btn-view-more mt-3">View Details</button>
-              </Link>
+              <div className="btns d-flex justify-content-between align-items-center px-3">
+                <Link to={`/productdetails/${item.id}`}>
+                  <button className="btn-view-more mt-3">View Details</button>
+                </Link>
+
+                <button
+                  className="btn-cart mt-3 border border-primary p-2 rounded text-primary"
+                  onClick={() => addToCart(item)}
+                >
+                  <FaShoppingCart size={20} />
+                </button>
+              </div>
             </div>
           ))}
         </div>
@@ -175,6 +215,8 @@ const Home = () => {
           </Link>
         </div>
       </div>
+
+      <ToastContainer />
     </>
   );
 };
