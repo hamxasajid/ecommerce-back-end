@@ -122,6 +122,7 @@ const Signup = () => {
                 required
                 value={formData.address}
                 onChange={handleChange}
+                style={{ resize: "none" }} // Add this inline style to prevent resizing
               />
             </div>
 

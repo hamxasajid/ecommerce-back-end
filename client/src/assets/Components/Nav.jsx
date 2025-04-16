@@ -132,8 +132,8 @@ const Nav = () => {
               <FaShoppingCart size={20} />
             </Link>
             <Link
-              to="/login"
-              className={`nav-link-nav me-3 ${isActive("/login")}`}
+              to="/sigin"
+              className={`nav-link-nav me-3 ${isActive("/sigin")}`}
             >
               <FaUser size={20} />
             </Link>
@@ -217,9 +217,9 @@ const Nav = () => {
           <div className="offcanvas-body">
             <Link
               className={`d-block mb-3 nav-link-nav-products ${isActive(
-                "/login"
+                "/sigin"
               )}`}
-              to="/login"
+              to="/sigin"
               onClick={() => setOffCanvasOpen(false)}
             >
               <FaUser className=" me-2" /> Login

@@ -22,6 +22,15 @@ const Checkout = () => {
     localStorage.setItem("cart", JSON.stringify(updatedData));
   };
 
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+    if (isLoggedIn !== "true") {
+      // Redirect to login page if not logged in
+      window.location.href = "/sigin";
+    }
+  }, []);
+
   return (
     <div className="container">
       <div className="head">

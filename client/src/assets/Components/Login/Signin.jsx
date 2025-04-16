@@ -9,6 +9,7 @@ const Signin = () => {
     password: "",
   });
 
+  // Define the handleChange function
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -28,14 +29,16 @@ const Signin = () => {
       const data = await response.json();
 
       if (response.ok && data.success) {
-        toast.success("Login successful!"); // Display success toast
-        window.location.href = "/cart";
+        // Save the login status in localStorage
+        localStorage.setItem("isLoggedIn", "true");
+        toast.success("Login successful!");
+        window.location.href = "/cart"; // Redirect to cart after successful login
       } else {
-        toast.error(data.message || "Invalid email or password"); // Display error toast
+        toast.error(data.message || "Invalid email or password");
       }
     } catch (error) {
       console.error("Error:", error);
-      toast.error("Something went wrong."); // Display error toast
+      toast.error("Something went wrong.");
     }
   };
 
@@ -59,7 +62,7 @@ const Signin = () => {
                 name="email"
                 required
                 value={formData.email}
-                onChange={handleChange}
+                onChange={handleChange} // Add onChange here
               />
             </div>
             <div className="mb-3">
@@ -73,7 +76,7 @@ const Signin = () => {
                 name="password"
                 required
                 value={formData.password}
-                onChange={handleChange}
+                onChange={handleChange} // Add onChange here
               />
             </div>
             <button type="submit" className="btn btn-primary w-100">
@@ -83,7 +86,9 @@ const Signin = () => {
 
           <div className="text-center mt-3">
             Don’t have an account?{" "}
-            <Link to="/sigup" className="text-primary">
+            <Link to="/signup" className="text-primary">
+              {" "}
+              {/* Fixed typo from sigup to signup */}
               Sign Up
             </Link>
           </div>
