@@ -19,6 +19,7 @@ const Nav = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [offCanvasOpen, setOffCanvasOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     if (!searchTerm.trim()) {
@@ -131,12 +132,51 @@ const Nav = () => {
             >
               <FaShoppingCart size={20} />
             </Link>
-            <Link
-              to="/sigin"
-              className={`nav-link-nav me-3 ${isActive("/sigin")}`}
+            <div
+              className="position-relative me-3"
+              onMouseEnter={() => setDropdownOpen(true)}
+              onMouseLeave={() => setDropdownOpen(false)}
             >
-              <FaUser size={20} />
-            </Link>
+              {localStorage.getItem("isLoggedIn") === "true" ? (
+                <>
+                  <div
+                    className="border border-primary rounded-circle text-primary d-flex justify-content-center align-items-center"
+                    style={{
+                      width: "35px",
+                      height: "35px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <FaUser size={18} />
+                  </div>
+                  {dropdownOpen && (
+                    <div
+                      className="position-absolute bg-white shadow p-2 rounded"
+                      style={{ top: "30px", right: 0, zIndex: 1000 }}
+                    >
+                      <button
+                        className="btn btn-sm btn-outline-danger w-100"
+                        onClick={() => {
+                          localStorage.removeItem("isLoggedIn");
+                          setDropdownOpen(false);
+                          navigate("/");
+                        }}
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <Link
+                  to="/sigin"
+                  className={`nav-link-nav ${isActive("/sigin")}`}
+                >
+                  <FaUser size={20} />
+                </Link>
+              )}
+            </div>
+
             <button
               className="navbar-toggler"
               type="button"
