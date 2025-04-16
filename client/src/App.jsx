@@ -10,6 +10,8 @@ import Details from "./assets/Components/SubComponenet/Details";
 import Checkout from "./assets/Components/SubComponenet/Checkout";
 import SearchResults from "./assets/Components/SearchResults";
 import CategoryProducts from "./assets/Components/SubComponenet/CategoryProducts";
+import Signin from "./assets/Components/Login/Signin";
+import Signup from "./assets/Components/Login/Signup";
 const App = () => {
   return (
     <>
@@ -29,6 +31,8 @@ const App = () => {
             <Route path="/cart" element={<Checkout />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/search_result" element={<SearchResults />} />
+            <Route path="/sigin" element={<Signin />} />
+            <Route path="/sigup" element={<Signup />} />
           </Route>
         </Routes>
         <Footer />

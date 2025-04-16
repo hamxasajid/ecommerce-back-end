@@ -35,15 +35,23 @@ const Home = () => {
   }, [data]); // Runs only when `data` changes
 
   const addToCart = (item) => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+    if (isLoggedIn !== "true") {
+      // Redirect if not logged in
+      window.location.href = "/sigin"; // change to your actual sign-in page
+      return;
+    }
+
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const exists = cart.find((cartItem) => cartItem.id === item.id);
 
     if (!exists) {
-      cart.push({ ...item, quantity: 1 }); // Default quantity
+      cart.push({ ...item, quantity: 1 });
       localStorage.setItem("cart", JSON.stringify(cart));
       toast.success("Product added successfully!", {
         position: "top-right",
-        autoClose: 2000, // Closes after 2 seconds
+        autoClose: 2000,
       });
     } else {
       toast.error("Product already in cart!", {
