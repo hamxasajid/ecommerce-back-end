@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom"; // if using React Router
+import { ToastContainer, toast } from "react-toastify"; // Import Toastify
+import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 
 const Signin = () => {
   const [formData, setFormData] = useState({
@@ -26,14 +28,14 @@ const Signin = () => {
       const data = await response.json();
 
       if (response.ok && data.success) {
-        alert("Login successful!");
+        toast.success("Login successful!"); // Display success toast
         window.location.href = "/cart";
       } else {
-        alert(data.message || "Invalid email or password");
+        toast.error(data.message || "Invalid email or password"); // Display error toast
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Something went wrong.");
+      toast.error("Something went wrong."); // Display error toast
     }
   };
 
@@ -87,6 +89,9 @@ const Signin = () => {
           </div>
         </div>
       </div>
+
+      {/* Toastify Container for toasts */}
+      <ToastContainer />
     </div>
   );
 };

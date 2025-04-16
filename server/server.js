@@ -1,29 +1,27 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const bcrypt = require("bcryptjs");
 const db = require("./Connection.js");
 const Product = require("./Models/productModel.js");
 const User = require("./Models/userModel.js");
-const bcrypt = require("bcryptjs"); // Add this line at the top of your server file
-
-db;
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Signin Route
 app.post("/signin", async (req, res) => {
-  // Updated route
   const { email, password } = req.body;
 
-  // Find the user by email
+  // Find user by email
   const user = await User.findOne({ email });
 
   if (!user) {
     return res.status(400).json({ success: false, message: "User not found" });
   }
 
-  // Compare passwords using bcrypt
+  // Check password validity
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {
@@ -32,16 +30,15 @@ app.post("/signin", async (req, res) => {
       .json({ success: false, message: "Invalid password" });
   }
 
-  // Send success response
   res.json({ success: true, message: "Login successful", user });
 });
 
+// Signup Route
 app.post("/signup", async (req, res) => {
-  // Updated route
   const { name, email, contact, password, address } = req.body;
 
   try {
-    // Check uniqueness
+    // Check if email or contact already exists
     const existingUser = await User.findOne({ $or: [{ email }, { contact }] });
 
     if (existingUser) {
@@ -50,7 +47,7 @@ app.post("/signup", async (req, res) => {
         .json({ error: "Email or Contact Number already exists" });
     }
 
-    // Hash the password
+    // Hash password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
@@ -69,6 +66,7 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+// Product Routes (Optional)
 app.get("/products", async (req, res) => {
   try {
     const products = await Product.find();

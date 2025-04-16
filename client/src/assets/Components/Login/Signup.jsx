@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom"; // If you're using React Router
+import { ToastContainer, toast } from "react-toastify"; // Import Toastify
+import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -29,14 +31,14 @@ const Signup = () => {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Signup successful!");
-        window.location.href = "/sigin"; // Use your actual route
+        toast.success("Signup successful!"); // Display success toast
+        window.location.href = "/sigin"; // Redirect to login page after successful signup
       } else {
-        alert(`Signup failed: ${data.error}`);
+        toast.error(`Signup failed: ${data.error}`); // Display error toast
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Something went wrong.");
+      toast.error("Something went wrong."); // Display error toast
     }
   };
 
@@ -137,6 +139,9 @@ const Signup = () => {
           </form>
         </div>
       </div>
+
+      {/* Toastify Container for toasts */}
+      <ToastContainer />
     </div>
   );
 };
