@@ -30,7 +30,7 @@ app.post("/signin", async (req, res) => {
       .json({ success: false, message: "Invalid password" });
   }
 
-  res.json({ success: true, message: "Login successful", user });
+  res.json({ success: true, message: "Login successfully", user });
 });
 
 // Signup Route
@@ -44,7 +44,7 @@ app.post("/signup", async (req, res) => {
     if (existingUser) {
       return res
         .status(400)
-        .json({ error: "Email or Contact Number already exists" });
+        .json({ error: "Email or Contact Number Already Exists" });
     }
 
     // Hash password before saving
