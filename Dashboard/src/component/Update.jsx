@@ -78,11 +78,11 @@ const Update = () => {
       });
 
       if (res.ok) {
-        alert("✅ Product updated successfully!");
+        alert("Product updated successfully!");
         navigate("/allProducts");
       } else {
         const errText = await res.text();
-        alert("❌ Failed to update: " + errText);
+        alert("Failed to update: " + errText);
       }
     } catch (error) {
       console.error("Update error:", error);
@@ -108,10 +108,10 @@ const Update = () => {
               name="id"
               value={product.id}
               onChange={handleChange}
-              disabled // ID should not be editable
+              disabled
             />
           </div>
-
+          {/* Title  */}
           <div className="mb-3">
             <label className="form-label fw-bold">Title</label>
             <input
@@ -124,6 +124,7 @@ const Update = () => {
             />
           </div>
 
+          {/* price  */}
           <div className="mb-3">
             <label className="form-label fw-bold">Price</label>
             <input
