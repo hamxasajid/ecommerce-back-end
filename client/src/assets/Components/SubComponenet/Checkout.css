@@ -25,6 +25,7 @@ td {
   border: 1px solid #ddd;
   padding: 10px;
   text-align: center;
+  width: 110px;
 }
 
 .product-image1 {
@@ -61,4 +62,26 @@ td {
 
 .checkout-btn:hover {
   opacity: 0.8;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.quantity-controls button {
+  background-color: #1c45c1;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.quantity-controls span {
+  width: 25px;
+  text-align: center;
+  font-weight: bold;
 }

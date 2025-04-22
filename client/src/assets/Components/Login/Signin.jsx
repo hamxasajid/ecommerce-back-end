@@ -28,11 +28,12 @@ const Signin = () => {
 
       const data = await response.json();
 
+      // Signin.jsx
       if (response.ok && data.success) {
-        // Save the login status in localStorage
         localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("userId", data.user._id); // 👈 Store userId
         toast.success("Login successful!");
-        window.location.href = "/cart"; // Redirect to cart after successful login
+        window.location.href = "/cart"; // or redirect as needed
       } else {
         toast.error(data.message || "Invalid email or password");
       }

@@ -35,30 +35,33 @@ const Details = () => {
       .catch(() => console.error("Error fetching product data"));
   }, [productId]);
 
-  const addToCart = (item) => {
+  const handleAddToCart = async (product) => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const userId = localStorage.getItem("userId");
 
-    if (isLoggedIn !== "true") {
-      // Redirect if not logged in
-      window.location.href = "/sigin"; // change to your actual sign-in page
+    if (!isLoggedIn || !userId) {
+      window.location.href = "/signin";
       return;
     }
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const exists = cart.find((cartItem) => cartItem.id === item.id);
+    const response = await fetch("http://localhost:5000/add-to-cart", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+        product: { ...product, quantity }, // Add quantity to the product object
+      }),
+    });
 
-    if (!exists) {
-      cart.push({ ...item, quantity: 1 });
-      localStorage.setItem("cart", JSON.stringify(cart));
-      toast.success("Product added successfully!", {
-        position: "top-right",
-        autoClose: 2000,
-      });
+    const data = await response.json();
+    console.log("Response from add-to-cart:", data);
+
+    if (data.success) {
+      toast.success(`${product.title.slice(0, 20)} added to cart!`);
     } else {
-      toast.error("Product already in cart!", {
-        position: "top-right",
-        autoClose: 2000,
-      });
+      toast.error(data.message || "Failed to add item");
     }
   };
 
@@ -112,15 +115,13 @@ const Details = () => {
               </div>
 
               <div className="product-actions">
-                <Link to="/cart" className="btn go-to-checkout">
-                  <button
-                    className="btn add-to-cart"
-                    onClick={() => addToCart(product)}
-                  >
-                    Go To Cart {""}
-                    <FaShoppingCart size={20} />
-                  </button>
-                </Link>
+                <button
+                  className="btn-cart mt-3 border border-primary p-2 rounded text-primary"
+                  onClick={() => handleAddToCart(product)}
+                >
+                  Add to Cart
+                  <FaShoppingCart className="ms-2" />
+                </button>
               </div>
             </div>
           </div>
@@ -170,7 +171,7 @@ const Details = () => {
 
                       <button
                         className="btn-cart mt-3 border border-primary p-2 rounded text-primary"
-                        onClick={() => addToCart(item)}
+                        onClick={() => handleAddToCart(item)}
                       >
                         <FaShoppingCart size={20} />
                       </button>
