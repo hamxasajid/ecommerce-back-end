@@ -80,7 +80,7 @@ const Nav = () => {
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <Link className="navbar-brand text-dark text-decoration-none" to="/">
-            Style<span className="text-primary fw-bold">Fusion</span>
+            Quick<span className="text-primary fw-bold">Cart</span>
           </Link>
 
           {/* Search Bar - Desktop */}
