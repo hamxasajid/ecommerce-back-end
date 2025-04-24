@@ -12,7 +12,8 @@ const AllProducts = () => {
     parseInt(localStorage.getItem("currentPage")) || 1
   );
   const productsPerPage = 8;
-
+    
+  // fetch product data from the server
   useEffect(() => {
     axios
       .get("http://localhost:5000/products")
