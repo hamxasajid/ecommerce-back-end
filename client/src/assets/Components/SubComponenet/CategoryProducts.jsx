@@ -17,7 +17,7 @@ const CategoryProducts = () => {
   const formatCategory = (str) =>
     str.toLowerCase().replace(/\s+/g, "-").replace(/['"]/g, "");
 
-  // Fetch products from API
+  // fetch product data from the server
   useEffect(() => {
     axios
       .get("http://localhost:5000/products")
@@ -66,7 +66,7 @@ const CategoryProducts = () => {
       window.location.href = "/sigin";
       return;
     }
-
+    // post product data to the server collection "cart"
     const response = await fetch("http://localhost:5000/add-to-cart", {
       method: "POST",
       headers: {
