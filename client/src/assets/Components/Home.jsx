@@ -43,6 +43,7 @@ const Home = () => {
       return;
     }
 
+    // post product data to the server collection "cart"
     const response = await fetch("http://localhost:5000/add-to-cart", {
       method: "POST",
       headers: {
