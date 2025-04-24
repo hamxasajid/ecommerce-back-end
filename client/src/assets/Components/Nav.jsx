@@ -10,7 +10,7 @@ import {
   FaInfo,
   FaBoxOpen,
   FaEnvelope,
-  FaSearch, // Import search icon
+  FaSearch,
 } from "react-icons/fa";
 
 const Nav = () => {
