@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Home = () => {
   const [data, setData] = useState([]);
   const [randomElectronics, setRandomElectronics] = useState([]);
-
+  // fetch product data from the server
   useEffect(() => {
     axios
       .get("http://localhost:5000/products")
