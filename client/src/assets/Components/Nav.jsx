@@ -27,6 +27,7 @@ const Nav = () => {
       return;
     }
 
+    // fetch product data from the server
     const fetchProducts = async () => {
       try {
         const response = await fetch("http://localhost:5000/products");
