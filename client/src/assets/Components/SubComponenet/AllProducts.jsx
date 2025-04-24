@@ -12,7 +12,7 @@ const AllProducts = () => {
     parseInt(localStorage.getItem("currentPage")) || 1
   );
   const productsPerPage = 8;
-    
+
   // fetch product data from the server
   useEffect(() => {
     axios
@@ -66,6 +66,7 @@ const AllProducts = () => {
       return;
     }
 
+    // post product data to the server collection "cart"
     const response = await fetch("http://localhost:5000/add-to-cart", {
       method: "POST",
       headers: {
